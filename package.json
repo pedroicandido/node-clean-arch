@@ -5,6 +5,7 @@
   "license": "MIT",
   "devDependencies": {
     "@types/node": "^22.10.2",
+    "eslint-config-love": "^113.0.0",
     "git-commit-msg-linter": "^5.0.8",
     "typescript": "^5.7.2"
   }
