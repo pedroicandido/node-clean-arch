@@ -1,5 +1,5 @@
 import { InvalidParamError, MissingParamError, ServerError } from "../../errors";
-import { IController, IEmailValidator,AccountModel,AddAccountModel, IAddAccount } from "./signup-protocols";
+import { IController, IEmailValidator, AccountModel, AddAccountModel, IAddAccount } from "./signup-protocols";
 import SignUpController from "./signup";
 
 interface SutType {
@@ -169,4 +169,40 @@ describe('Signup Controller', () => {
     })
   })
 
+
+  test("Should return 500 if add account throws", () => {
+    const { sut, addAccountStub } = makeSut()
+    jest.spyOn(addAccountStub, 'add').mockImplementationOnce(() => { throw new Error() })
+    const httpRequest = {
+      body: {
+        name: 'any_name',
+        email: 'any_email@mail.com',
+        password: 'any_password',
+        passwordConfirmation: 'any_password'
+      }
+    }
+    const httpResponse = sut.handle(httpRequest);
+    expect(httpResponse.statusCode).toBe(500)
+    expect(httpResponse.body).toEqual(new ServerError())
+  })
+
+  test("Should return 200 if valid data is provided", () => {
+    const { sut } = makeSut();
+    const httpRequest = {
+      body: {
+        name: 'any_name',
+        email: 'any_valid@mail.com',
+        password: 'any_password',
+        passwordConfirmation: 'any_password'
+      }
+    }
+    const httpResponse = sut.handle(httpRequest);
+    expect(httpResponse.statusCode).toBe(200)
+    expect(httpResponse.body).toEqual({
+      id: 'valid_id',
+      name: 'valid_name',
+      email: 'valid_email',
+      password: 'valid_password',
+    })
+  })
 })
