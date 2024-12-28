@@ -24,3 +24,4 @@ test('Should return a hash on success', () => {
   const hash = sut.encrypt('any_value')
   expect(hash).toBe('hash')
 })
+
