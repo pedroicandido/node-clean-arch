@@ -1,6 +1,6 @@
-import { IAddAccount } from "../../../domain/usecases/add-account";
-import { IEncrypter } from "../../protocols/encrypter";
+
 import { DbAddAccount } from "./db-add-account";
+import { IAddAccount, IEncrypter } from "./db-add-account-protocols";
 
 interface SutTypes {
   sut: IAddAccount;
