@@ -11,6 +11,11 @@ describe('Account  mongo repository', () => {
     await mongoDbInstance.close();
   });
 
+  beforeEach(async()=>{
+    const accountCollection = mongoDbInstance.getCollection('accounts')
+    await accountCollection.deleteMany({})
+  })
+
 
 
   test('Should return an account on success', async () => {
