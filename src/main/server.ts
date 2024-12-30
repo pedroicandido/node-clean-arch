@@ -1,3 +1,13 @@
+import MongoHelper from '..//infra/db/mongodb/helpers/mongo-helper';
+import env from "./config/env";
 import app from "./config/app";
 
-app.listen(5050, ()=> console.log('Server runing at http://localhost:5050'))
+const mongoDbInstance = MongoHelper.getInstance();
+
+mongoDbInstance.connect(env.mongoUrl).then(() => {
+  app.listen(env.port, () => console.log(`Server runing at http://localhost:${env.port}`))
+}).catch(console.error);
+
+
+
+
