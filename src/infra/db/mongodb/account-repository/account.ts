@@ -9,7 +9,7 @@ export class AccountMongoRepository implements IAddAccountRepository {
     this.mongoDbInstance = mongoDbInstance;
   }
   async add(accountData: AddAccountModel): Promise<AccountModel> {
-    const accountCollection = this.mongoDbInstance.getCollection('accounts');
+    const accountCollection = await this.mongoDbInstance.getCollection('accounts');
     const result = await accountCollection.insertOne(accountData)
     return {
       ...accountData,

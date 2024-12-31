@@ -1,22 +1,24 @@
 import { MongoClient, Db, Collection } from 'mongodb';
 
-class MongoDBSingleton {
-  private static instance: MongoDBSingleton;
+class MongoHelper {
+  private static instance: MongoHelper;
   private client: MongoClient | null = null;
   private db: Db | null = null;
+  private uri: string
 
   private constructor() { } // Construtor privado para não permitir criação direta
 
   // Método para obter a instância única
-  public static getInstance(): MongoDBSingleton {
-    if (!MongoDBSingleton.instance) {
-      MongoDBSingleton.instance = new MongoDBSingleton();
+  public static getInstance(): MongoHelper {
+    if (!MongoHelper.instance) {
+      MongoHelper.instance = new MongoHelper();
     }
-    return MongoDBSingleton.instance;
+    return MongoHelper.instance;
   }
 
   // Método para abrir a conexão com o MongoDB, agora com a URI sendo passada aqui
   public async connect(uri: string): Promise<void> {
+    this.uri = uri;
     if (this.client && this.db) {
       console.log('Conexão já estabelecida.');
       return;
@@ -59,13 +61,12 @@ class MongoDBSingleton {
   }
 
   // Método para obter uma coleção pelo nome
-  public getCollection(collectionName: string): Collection {
+  public async getCollection(collectionName: string): Promise<Collection> {
     if (!this.db) {
-      console.error('Banco de dados não conectado.');
-      return null;
+      await this.connect(this.uri);
     }
     return this.db.collection(collectionName);
   }
 }
 
-export default MongoDBSingleton;
+export default MongoHelper;
