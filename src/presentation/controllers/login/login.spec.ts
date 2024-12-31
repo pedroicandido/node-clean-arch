@@ -1,11 +1,8 @@
-import { IAuthentication } from "../../../domain/usecases/authentication";
 import { InvalidParamError, MissingParamError, ServerError } from "../../errors";
-import { UnauthorizedError } from "../../errors/unauthorized-error";
-
 import { badRequest, ok, serverError, unauthorized } from "../../helper/http-helper";
-import { HttpRequest, IController } from "../../protocols";
-import { IEmailValidator } from "../signup/signup-protocols";
 import { LoginController } from "./login";
+import { IAuthentication, IEmailValidator, HttpRequest, IController } from "./login-protocols";
+
 
 interface SutType {
   sut: IController,
