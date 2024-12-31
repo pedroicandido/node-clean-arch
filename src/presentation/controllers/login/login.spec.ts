@@ -128,4 +128,17 @@ describe('Signup Controller', () => {
     const httpResponse = await sut.handle(httpRequest);
     expect(httpResponse).toEqual(serverError(new ServerError('any_error')))
   })
+
+  test("Should return 200 and a token if valid credentials are provided", async () => {
+    const { sut } = makeSut();
+    const httpRequest = {
+      body: {
+        email: 'any_invalid_email',
+        password: 'any_password'
+      }
+    }
+    const httpResponse = await sut.handle(httpRequest);
+    expect(httpResponse).toEqual(ok({ token: 'any_token' }))
+  })
+
 })
