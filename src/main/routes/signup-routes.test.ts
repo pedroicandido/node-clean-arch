@@ -13,7 +13,7 @@ describe("Signup routes", () => {
   });
 
   beforeEach(async () => {
-    const accountCollection = mongoDbInstance.getCollection('accounts')
+    const accountCollection = await mongoDbInstance.getCollection('accounts')
     await accountCollection.deleteMany({})
   })
 
