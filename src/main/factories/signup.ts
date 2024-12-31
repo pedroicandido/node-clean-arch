@@ -7,6 +7,9 @@ import { EmailValidatorAdapter } from "../../utils/email-validator-adapter";
 import MongoHelper from "../../infra/db/mongodb/helpers/mongo-helper";
 import { LogControllerDecorator } from "../decorators/log";
 import { LogMongoRepository } from "../../infra/db/mongodb/log-repository/log";
+import { ValidationComposite } from "../../presentation/helper/validators/validation-composite";
+import { RequiredFieldValidation } from "../../presentation/helper/validators/required-field-validation";
+import { makeSignUpValidation } from "./signup-validation";
 
 
 
@@ -17,7 +20,7 @@ export const makeSignupController = (): IController => {
   const addAccountRepository = new AccountMongoRepository(mongoInstance);
   const addAccount = new DbAddAccount(encrypter, addAccountRepository);
   const emailValidator = new EmailValidatorAdapter();
-  const signUpController = new SignUpController(emailValidator, addAccount);
+  const signUpController = new SignUpController(emailValidator, addAccount, makeSignUpValidation());
   const logControllerDecorator = new LogControllerDecorator(signUpController, logErrorRepository)
   return logControllerDecorator;
 }
