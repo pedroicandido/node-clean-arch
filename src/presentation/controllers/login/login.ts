@@ -1,6 +1,6 @@
 import { IAuthentication, IEmailValidator, HttpRequest, HttpResponse, IController } from "./login-protocols";
 import { InvalidParamError, MissingParamError } from "../../errors";
-import { badRequest, serverError, unauthorized } from "../../helper/http-helper";
+import { badRequest, ok, serverError, unauthorized } from "../../helper/http-helper";
 
 export class LoginController implements IController {
   private readonly emailValidator: IEmailValidator;
@@ -26,6 +26,7 @@ export class LoginController implements IController {
       if (!token) {
         return unauthorized();
       }
+      return ok({token})
     } catch (error) {
       return serverError(error)
     }
