@@ -1,6 +1,5 @@
-import { InvalidParamError, MissingParamError } from "../../errors";
-import { IEmailValidator } from "../../protocols/email-validator";
-import { EmailValidation } from "./email-validation";
+import { MissingParamError } from "../../errors";
+
 import { RequiredFieldValidation } from "./required-field-validation";
 
 interface SutType {
