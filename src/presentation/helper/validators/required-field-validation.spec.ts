@@ -20,4 +20,10 @@ describe('Required field validation', () => {
     const error = sut.validate({ email: "any_email@mail.com" })
     expect(error).toEqual(new MissingParamError('field'))
   })
+
+  test("Should return falsy if validation succeds", () => {
+    const { sut } = makeSut();
+    const error = sut.validate({ field: "any_value" })
+    expect(error).toBeFalsy()
+  })
 })
