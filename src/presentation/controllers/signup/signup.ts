@@ -3,12 +3,11 @@ import { badRequest, ok, serverError } from "../../helper/http-helper"
 import { IController, IEmailValidator, HttpRequest, HttpResponse, IAddAccount, IValidation } from "./signup-protocols"
 
 export default class SignUpController implements IController {
-  private readonly emailValidator: IEmailValidator
+
   private readonly addAccount: IAddAccount
   private readonly validation: IValidation
 
-  constructor(emailValidator: IEmailValidator, addAccount: IAddAccount, validation: IValidation) {
-    this.emailValidator = emailValidator;
+  constructor(addAccount: IAddAccount, validation: IValidation) {
     this.addAccount = addAccount;
     this.validation = validation;
   }
@@ -19,11 +18,6 @@ export default class SignUpController implements IController {
         return badRequest(error)
       }
       const { password, email, name } = httpRequest.body;
-
-      const isValidEmail = this.emailValidator.isValid(email);
-      if (!isValidEmail) {
-        return badRequest(new InvalidParamError('email'))
-      }
       const account = await this.addAccount.add({
         name,
         email,
