@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt'
 import { BcryptAdapter } from './bcrypt-adapter';
-import { IEncrypter } from '../../data/protocols/encrypter';
+import { IEncrypter } from '../../data/protocols/criptography/encrypter';
 
 jest.mock('bcrypt', () => ({
   hashSync: () => 'hash'
