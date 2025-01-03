@@ -1,10 +1,13 @@
-import { AuthenticationModel } from "../../../domain/usecases/authentication";
-import { IHashCompare } from "../../protocols/criptography/hash-comparer";
-import { ITokenGenerator } from "../../protocols/criptography/token-generator";
-import { ILoadAccountEmailByRepository } from "../../protocols/db/load-account-email-by-repository";
-import { IUpdateTokenRepository } from "../../protocols/db/update-token-repository";
-import { AccountModel } from "../add-account/db-add-account-protocols";
 import { DbAuthentication } from "./db-authentication";
+import {
+  AuthenticationModel,
+  IHashCompare,
+  ITokenGenerator,
+  ILoadAccountEmailByRepository,
+  IUpdateTokenRepository,
+  AccountModel
+} from "./db-authentication-protocols";
+
 
 type SutTypes = {
   sut: DbAuthentication;
@@ -66,10 +69,10 @@ const makeSut = (): SutTypes => {
   const hashComparerStub = makeHashCompare();
   const tokenGeneratorStub = makeTokenGenerator();
   const sut = new DbAuthentication(
-    loadAccountByEmailStub
-    , hashComparerStub
-    , tokenGeneratorStub
-    , updateTokenRepositoryStub
+    loadAccountByEmailStub,
+    hashComparerStub,
+    tokenGeneratorStub,
+    updateTokenRepositoryStub
   );
 
   return {
