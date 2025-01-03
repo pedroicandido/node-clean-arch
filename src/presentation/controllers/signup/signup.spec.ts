@@ -1,7 +1,7 @@
 import { InvalidParamError, MissingParamError, ServerError } from "../../errors";
 import { IController, IEmailValidator, AccountModel, AddAccountModel, IAddAccount, HttpRequest, IValidation } from "./signup-protocols";
 import SignUpController from "./signup";
-import { badRequest, ok } from "../../helper/http-helper";
+import { badRequest, ok } from "../../helper/http/http-helper";
 
 interface SutType {
   sut: IController,

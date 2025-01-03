@@ -1,4 +1,4 @@
-import { badRequest, ok, serverError } from "../../helper/http-helper"
+import { badRequest, ok, serverError } from "../../helper/http/http-helper"
 import { IController, HttpRequest, HttpResponse, IAddAccount, IValidation } from "./signup-protocols"
 
 export default class SignUpController implements IController {
