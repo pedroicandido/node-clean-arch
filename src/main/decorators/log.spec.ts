@@ -1,4 +1,4 @@
-import { ILogErrorRepository } from "../../data/protocols/log-error-repository";
+import { ILogErrorRepository } from "../../data/protocols/db/log-error-repository";
 import { serverError } from "../../presentation/helper/http/http-helper";
 import { HttpRequest, HttpResponse, IController } from "../../presentation/protocols"
 import { LogControllerDecorator } from "./log"
