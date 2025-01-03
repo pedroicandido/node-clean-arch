@@ -92,7 +92,14 @@ describe('Db Authentication usecase', () => {
     expect(hashSpy).toHaveBeenCalledWith('hashed_password', 'loaded_hashed')
   })
 
-  
+  test('Should return null if hash comparer returns false', async () => {
+    const { hashComparerStub, sut } = makeSut();
+    jest.spyOn(hashComparerStub, 'compare').mockResolvedValue(false)
+    const token = await sut.auth(makeFakeAuth())
+    expect(token).toBeNull();
+  })
+
+
   test('Should throws if HashComparer throws', async () => {
     const { hashComparerStub, sut } = makeSut();
     jest.spyOn(hashComparerStub, 'compare').mockImplementationOnce(() => new Promise((resolve, reject) => reject(new Error())))
@@ -112,6 +119,12 @@ describe('Db Authentication usecase', () => {
     jest.spyOn(tokenGeneratorStub, 'generate').mockImplementationOnce(() => new Promise((resolve, reject) => reject(new Error())))
     const promise = sut.auth(makeFakeAuth())
     expect(promise).rejects.toThrow()
+  })
+
+  test('Should return a token on success', async () => {
+    const { sut } = makeSut();
+    const token = await sut.auth(makeFakeAuth())
+    expect(token).toBe('any_token')
   })
 
 })
