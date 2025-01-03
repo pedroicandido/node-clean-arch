@@ -1,5 +1,4 @@
 
-import { AccountModel } from "../../../domain/models/account";
 import { AuthenticationModel, IAuthentication } from "../../../domain/usecases/authentication";
 import { ILoadAccountEmailByRepository } from "../../protocols/db/load-account-email-by-repository";
 
