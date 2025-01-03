@@ -1,6 +1,5 @@
-import { InvalidParamError, MissingParamError } from "../../errors"
 import { badRequest, ok, serverError } from "../../helper/http-helper"
-import { IController, IEmailValidator, HttpRequest, HttpResponse, IAddAccount, IValidation } from "./signup-protocols"
+import { IController, HttpRequest, HttpResponse, IAddAccount, IValidation } from "./signup-protocols"
 
 export default class SignUpController implements IController {
 
