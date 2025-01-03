@@ -13,9 +13,9 @@ import { makeSignUpValidation } from "./signup-validation";
 export const makeSignupController = (): IController => {
   const mongoInstance = MongoHelper.getInstance();
   const logErrorRepository = new LogMongoRepository(mongoInstance)
-  const encrypter = new BcryptAdapter(12);
+  const hasher = new BcryptAdapter(12);
   const addAccountRepository = new AccountMongoRepository(mongoInstance);
-  const addAccount = new DbAddAccount(encrypter, addAccountRepository);
+  const addAccount = new DbAddAccount(hasher, addAccountRepository);
   const signUpController = new SignUpController(addAccount, makeSignUpValidation());
   const logControllerDecorator = new LogControllerDecorator(signUpController, logErrorRepository)
   return logControllerDecorator;

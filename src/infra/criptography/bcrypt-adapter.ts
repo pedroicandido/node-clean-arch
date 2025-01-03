@@ -1,12 +1,12 @@
-import { IEncrypter } from "../../data/protocols/criptography/encrypter";
+import { IHasher } from "../../data/protocols/criptography/hasher";
 import bcrypt from 'bcrypt'
 
-export class BcryptAdapter implements IEncrypter {
+export class BcryptAdapter implements IHasher {
   private readonly salt: number;
   constructor(salt: number) {
     this.salt = salt;
   }
-  encrypt(value: string): string {
+  hash(value: string): string {
     return bcrypt.hashSync(value, this.salt);
   }
 }
