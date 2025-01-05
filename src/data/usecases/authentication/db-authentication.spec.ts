@@ -37,8 +37,8 @@ const makeHashCompare = (): IHashCompare => {
 
 const makeTokenGenerator = (): IEncrypter => {
   class EncrypterStub implements IEncrypter {
-    async encrypt(value: string): Promise<string> {
-      return new Promise((resolve, reject) => resolve('any_token'))
+    encrypt(value: string): string {
+      return 'any_token'
     }
   }
   return new EncrypterStub();
@@ -137,7 +137,7 @@ describe('Db Authentication usecase', () => {
 
   test('Should throws if TokenGenerator throws', async () => {
     const { encrypterStub, sut } = makeSut();
-    jest.spyOn(encrypterStub, 'encrypt').mockImplementationOnce(() => new Promise((resolve, reject) => reject(new Error())))
+    jest.spyOn(encrypterStub, 'encrypt').mockImplementationOnce(() => { throw new Error() })
     const promise = sut.auth(makeFakeAuth())
     expect(promise).rejects.toThrow()
   })
