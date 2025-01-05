@@ -1,6 +1,5 @@
-import bcrypt, { compare } from 'bcrypt'
+import bcrypt from 'bcrypt'
 import { BcryptAdapter } from './bcrypt-adapter';
-import { IHasher } from '../../data/protocols/criptography/hasher';
 
 jest.mock('bcrypt', () => ({
   hashSync: (): string => 'hash',
@@ -12,6 +11,8 @@ const salt = 12;
 const makeSut = (): BcryptAdapter => {
   return new BcryptAdapter(salt);
 }
+
+beforeEach(jest.clearAllMocks)
 
 test('Should call hash method with correct value', () => {
   const sut = makeSut();
@@ -36,9 +37,15 @@ test('Should call compare with correct values', async () => {
 
 test('Should return false is compare returns false', async () => {
   const sut = makeSut();
-  jest.spyOn(bcrypt, 'compare').mockImplementation(() => false);
+  jest.spyOn(bcrypt, 'compare').mockImplementationOnce(() => false);
   const isValid = await sut.compare('any_value', 'hash')
   expect(isValid).toBe(false)
+})
+
+test('Should return true if compare succeeds', async () => {
+  const sut = makeSut();
+  const isValid = await sut.compare('any_value', 'hash')
+  expect(isValid).toBe(true)
 })
 
 
