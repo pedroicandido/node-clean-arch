@@ -1,4 +1,4 @@
-import { MongoClient, Db, Collection } from 'mongodb';
+import { MongoClient, Db, Collection, ObjectId } from 'mongodb';
 
 class MongoHelper {
   private static instance: MongoHelper;
@@ -66,6 +66,10 @@ class MongoHelper {
       await this.connect(this.uri);
     }
     return this.db.collection(collectionName);
+  }
+
+  public toObjectId(id:string){
+    return new ObjectId(id);
   }
 }
 
