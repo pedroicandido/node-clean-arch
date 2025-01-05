@@ -34,3 +34,13 @@ test('Should call compare with correct values', async () => {
   expect(compareSpy).toHaveBeenCalledWith('any_value', 'hash')
 })
 
+test('Should return false is compare returns false', async () => {
+  const sut = makeSut();
+  jest.spyOn(bcrypt, 'compare').mockImplementation(() => false);
+  const isValid = await sut.compare('any_value', 'hash')
+  expect(isValid).toBe(false)
+})
+
+
+
+
