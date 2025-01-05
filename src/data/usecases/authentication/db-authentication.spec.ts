@@ -19,7 +19,7 @@ type SutTypes = {
 
 const makeUpdateToken = (): IUpdateTokenRepository => {
   class UpdateTokenRepositoryStub implements IUpdateTokenRepository {
-    async update(id: string, token: string): Promise<void> {
+    async updateToken(id: string, token: string): Promise<void> {
       return null
     }
   }
@@ -150,14 +150,14 @@ describe('Db Authentication usecase', () => {
 
   test('Should call UpdateTokenRepository with correct values', async () => {
     const { updateTokenRepositoryStub, sut } = makeSut();
-    const updateTokenSpy = jest.spyOn(updateTokenRepositoryStub, 'update')
+    const updateTokenSpy = jest.spyOn(updateTokenRepositoryStub, 'updateToken')
     await sut.auth(makeFakeAuth())
     expect(updateTokenSpy).toHaveBeenCalledWith('valid_id', 'any_token')
   })
 
   test('Should throws if UpdateTokenRepository throws', async () => {
     const { updateTokenRepositoryStub, sut } = makeSut();
-    jest.spyOn(updateTokenRepositoryStub, 'update').mockImplementationOnce(() => new Promise((resolve, reject) => reject(new Error())))
+    jest.spyOn(updateTokenRepositoryStub, 'updateToken').mockImplementationOnce(() => new Promise((resolve, reject) => reject(new Error())))
     const promise = sut.auth(makeFakeAuth())
     expect(promise).rejects.toThrow()
   })
