@@ -32,5 +32,9 @@ describe("Login routes", () => {
       await accountCollection.insertOne({ name: 'Pedro', email: 'pedro@mail.com', password })
       await request(app).post('/api/login').send({ email: 'pedro@mail.com', password:'123' }).expect(200)
     })
+
+    test('Should return 401 if user not find', async () => {
+      await request(app).post('/api/login').send({ email: 'pedro@mail.com', password:'123' }).expect(401)
+    })
   })
 })
