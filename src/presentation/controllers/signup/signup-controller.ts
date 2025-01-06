@@ -3,13 +3,8 @@ import { IController, HttpRequest, HttpResponse, IAddAccount, IValidation } from
 
 export default class SignUpController implements IController {
 
-  private readonly addAccount: IAddAccount
-  private readonly validation: IValidation
+  constructor(private readonly addAccount: IAddAccount, private readonly validation: IValidation) { }
 
-  constructor(addAccount: IAddAccount, validation: IValidation) {
-    this.addAccount = addAccount;
-    this.validation = validation;
-  }
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
       const error = this.validation.validate(httpRequest.body)

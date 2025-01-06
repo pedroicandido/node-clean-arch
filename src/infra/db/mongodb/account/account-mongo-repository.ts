@@ -7,10 +7,8 @@ import { AddAccountModel } from "../../../../domain/usecases/add-account";
 import MongoHelper from "../helpers/mongo-helper";
 
 export class AccountMongoRepository implements IAddAccountRepository, ILoadAccountEmailByRepository, IUpdateTokenRepository {
-  private readonly mongoDbInstance: MongoHelper;
-  constructor(mongoDbInstance: MongoHelper) {
-    this.mongoDbInstance = mongoDbInstance;
-  }
+
+  constructor(private readonly mongoDbInstance: MongoHelper) {}
 
   async updateToken(id: string, token: string): Promise<void> {
     const accountCollection = await this.mongoDbInstance.getCollection('accounts');
