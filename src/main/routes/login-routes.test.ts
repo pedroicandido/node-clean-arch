@@ -8,7 +8,7 @@ describe("Login routes", () => {
   const mongoDbInstance = MongoHelper.getInstance();
   let accountCollection: Collection;
   beforeAll(async () => {
-    await mongoDbInstance.connect(process.env.MONGO_URL);
+    await mongoDbInstance.connect(process.env.MONGO_URL as string);
   });
 
   afterAll(async () => {
