@@ -1,7 +1,7 @@
 import { ObjectId } from "mongodb";
-import { IAddAccountRepository } from "../../../../data/protocols/db/add-account-repository";
-import { ILoadAccountEmailByRepository } from "../../../../data/protocols/db/load-account-email-by-repository";
-import { IUpdateTokenRepository } from "../../../../data/protocols/db/update-token-repository";
+import { IAddAccountRepository } from "../../../../data/protocols/db/account/add-account-repository";
+import { ILoadAccountEmailByRepository } from "../../../../data/protocols/db/account/load-account-email-by-repository";
+import { IUpdateTokenRepository } from "../../../../data/protocols/db/account/update-token-repository";
 import { AccountModel } from "../../../../domain/models/account";
 import { AddAccountModel } from "../../../../domain/usecases/add-account";
 import MongoHelper from "../helpers/mongo-helper";

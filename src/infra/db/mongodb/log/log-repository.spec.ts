@@ -1,6 +1,6 @@
 import { Collection } from 'mongodb';
 import MongoHelper from '../helpers/mongo-helper';
-import { LogMongoRepository } from './log';
+import { LogMongoRepository } from './log-repository';
 
 describe('Log mongo repository', () => {
   const mongoDbInstance = MongoHelper.getInstance();
