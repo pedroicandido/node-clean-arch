@@ -2,7 +2,7 @@ import request from 'supertest'
 import app from '../config/app'
 import MongoHelper from '../../infra/db/mongodb/helpers/mongo-helper';
 
-describe("Signup routes", () => {
+describe("Login routes", () => {
   const mongoDbInstance = MongoHelper.getInstance();
   beforeAll(async () => {
     await mongoDbInstance.connect(process.env.MONGO_URL);
