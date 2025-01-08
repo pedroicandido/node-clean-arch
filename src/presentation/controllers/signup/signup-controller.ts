@@ -12,13 +12,13 @@ export default class SignUpController implements IController {
         return badRequest(error)
       }
       const { password, email, name } = httpRequest.body;
-      const account = await this.addAccount.add({
+      await this.addAccount.add({
         name,
         email,
         password
       })
       const token = await this.authentication.auth({ email, password })
-      return ok(account)
+      return ok({ token })
     } catch (error) {
       return serverError(error)
     }
