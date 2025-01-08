@@ -12,7 +12,7 @@ interface SutType {
 
 const makeValidation = (): IValidation => {
   class ValidationStub implements IValidation {
-    validate(input: any): Error {
+    validate(input: any): Error | null {
       return null;
     }
   }
@@ -22,7 +22,7 @@ const makeValidation = (): IValidation => {
 
 const makeAuthentication = (): IAuthentication => {
   class AuthenticationStub implements IAuthentication {
-    async auth(authentication: AuthenticationModel): Promise<string> | null {
+    async auth(authentication: AuthenticationModel): Promise<string | null> {
       return 'any_token';
     }
   }
@@ -63,7 +63,7 @@ describe('Signup Controller', () => {
 
   test("Should return 401 if invalid credentials are provided", async () => {
     const { sut, authenticationStub } = makeSut();
-    jest.spyOn(authenticationStub, 'auth').mockReturnValue(null)
+    jest.spyOn(authenticationStub, 'auth').mockReturnValue(Promise.resolve(null))
     const httpRequest = {
       body: {
         email: 'any_invalid_email',
