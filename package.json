@@ -35,7 +35,10 @@
     "test:ci": "yarn test -- --coverage",
     "dev": "sucrase-node src/main/server.ts",
     "start": "node dist/main/server.js",
-    "build": "rimraf dist && tsc"
+    "debug": "node --inspect=0.0.0.0:9222 --nolazy dist/main/server.js",
+    "build": "rimraf dist && tsc",
+    "up":"yarn build && docker-compose up -d",
+    "down":"docker compose down"
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
