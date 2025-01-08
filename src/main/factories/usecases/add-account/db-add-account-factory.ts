@@ -7,7 +7,7 @@ import { IAddAccount } from "../../../../domain/usecases/add-account";
 export const makeDbAddAccount = (): IAddAccount => {
   const mongoInstance = MongoHelper.getInstance();
   const hasher = new BcryptAdapter(12);
-  const addAccountRepository = new AccountMongoRepository(mongoInstance);
-  const addAccount = new DbAddAccount(hasher, addAccountRepository);
+  const accountRepository = new AccountMongoRepository(mongoInstance);
+  const addAccount = new DbAddAccount(hasher, accountRepository, accountRepository);
   return addAccount
 }
