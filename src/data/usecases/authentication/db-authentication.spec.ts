@@ -19,7 +19,7 @@ type SutTypes = {
 
 const makeUpdateToken = (): IUpdateTokenRepository => {
   class UpdateTokenRepositoryStub implements IUpdateTokenRepository {
-    async updateToken(id: string, token: string): Promise<void> {
+    async updateToken(id: string, token: string): Promise<void | null> {
       return null
     }
   }
@@ -56,7 +56,7 @@ const makeFakeAuth = (): AuthenticationModel => ({ email: 'valid_email@mail.com'
 
 const makeAccountRepository = (): ILoadAccountEmailByRepository => {
   class LoadAccountByEmailRepositoryStub implements ILoadAccountEmailByRepository {
-    async loadByEmail(email: string): Promise<AccountModel> {
+    async loadByEmail(email: string): Promise<AccountModel | null> {
       return makeFakeAccount();
     }
   }
@@ -101,7 +101,7 @@ describe('Db Authentication usecase', () => {
 
   test('Should return null if LoadAccountByEmailRepository returns null', async () => {
     const { loadAccountByEmailStub, sut } = makeSut();
-    jest.spyOn(loadAccountByEmailStub, 'loadByEmail').mockReturnValue(null)
+    jest.spyOn(loadAccountByEmailStub, 'loadByEmail').mockReturnValue(Promise.resolve(null))
     const token = await sut.auth(makeFakeAuth())
     expect(token).toBeNull()
   })
