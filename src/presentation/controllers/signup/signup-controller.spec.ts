@@ -1,7 +1,7 @@
 import { MissingParamError, ServerError } from "../../errors";
 import { IController, IEmailValidator, AccountModel, AddAccountModel, IAddAccount, HttpRequest, IValidation, IAuthentication, AuthenticationModel } from "./signup-controller-protocols";
 import SignUpController from "./signup-controller";
-import { badRequest, ok } from "../../helper/http/http-helper";
+import { badRequest, ok, serverError } from "../../helper/http/http-helper";
 
 interface SutType {
   sut: IController,
@@ -135,5 +135,13 @@ describe('Signup Controller', () => {
     await sut.handle(httpRequest);
     expect(authSpy).toHaveBeenCalledWith({ email: httpRequest.body.email, password: httpRequest.body.password })
   })
+
+    test("Should return 500 if authentication throws", async () => {
+      const { sut, authenticationStub } = makeSut()
+      jest.spyOn(authenticationStub, 'auth').mockImplementationOnce(() => { throw new ServerError('any_error') })
+      const httpRequest = makeFakeHttpRequest();
+      const httpResponse = await sut.handle(httpRequest);
+      expect(httpResponse).toEqual(serverError(new ServerError('any_error')))
+    })
 
 })
