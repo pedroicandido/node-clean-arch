@@ -7,7 +7,11 @@
         "sourceMap": true
     },
     "include": [
-        "src"
+        "src",
+        "src/presentation/errors/.ts"
     ],
-    "exclude": ["**/*.spec.ts","**/*.test.ts"]
+    "exclude": [
+        "**/*.spec.ts",
+        "**/*.test.ts"
+    ]
 }
