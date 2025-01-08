@@ -29,7 +29,7 @@ const makeFakeHttpRequest = (): HttpRequest => ({
 
 const makeValidation = (): IValidation => {
   class ValidationStub implements IValidation {
-    validate(input: any): Error | null{
+    validate(input: any): Error | null {
       return null;
     }
   }
@@ -71,7 +71,7 @@ const makeSut = (): SutType => {
   const addAccountStub = makeAddAccount();
   const emailValidator = makeEmailValidator();
   const validationStub = makeValidation();
-  const sut = new SignUpController(addAccountStub, validationStub,authenticationStub)
+  const sut = new SignUpController(addAccountStub, validationStub, authenticationStub)
   return {
     sut,
     emailValidator,
@@ -109,7 +109,7 @@ describe('Signup Controller', () => {
     const { sut } = makeSut();
     const httpRequest = makeFakeHttpRequest();
     const httpResponse = await sut.handle(httpRequest);
-    expect(httpResponse).toEqual(ok(makeFakeAccount()))
+    expect(httpResponse).toEqual(ok({ token: 'any_token' }))
   })
 
   test("Should call Validation with correct values", async () => {
@@ -136,12 +136,12 @@ describe('Signup Controller', () => {
     expect(authSpy).toHaveBeenCalledWith({ email: httpRequest.body.email, password: httpRequest.body.password })
   })
 
-    test("Should return 500 if authentication throws", async () => {
-      const { sut, authenticationStub } = makeSut()
-      jest.spyOn(authenticationStub, 'auth').mockImplementationOnce(() => { throw new ServerError('any_error') })
-      const httpRequest = makeFakeHttpRequest();
-      const httpResponse = await sut.handle(httpRequest);
-      expect(httpResponse).toEqual(serverError(new ServerError('any_error')))
-    })
+  test("Should return 500 if authentication throws", async () => {
+    const { sut, authenticationStub } = makeSut()
+    jest.spyOn(authenticationStub, 'auth').mockImplementationOnce(() => { throw new ServerError('any_error') })
+    const httpRequest = makeFakeHttpRequest();
+    const httpResponse = await sut.handle(httpRequest);
+    expect(httpResponse).toEqual(serverError(new ServerError('any_error')))
+  })
 
 })
