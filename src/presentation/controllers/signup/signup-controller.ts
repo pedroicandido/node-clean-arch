@@ -1,9 +1,9 @@
 import { badRequest, ok, serverError } from "../../helper/http/http-helper"
-import { IController, HttpRequest, HttpResponse, IAddAccount, IValidation } from "./signup-controller-protocols"
+import { IController, HttpRequest, HttpResponse, IAddAccount, IValidation, IAuthentication } from "./signup-controller-protocols"
 
 export default class SignUpController implements IController {
 
-  constructor(private readonly addAccount: IAddAccount, private readonly validation: IValidation) { }
+  constructor(private readonly addAccount: IAddAccount, private readonly validation: IValidation, private readonly authentication: IAuthentication) { }
 
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
@@ -17,6 +17,7 @@ export default class SignUpController implements IController {
         email,
         password
       })
+      const token = await this.authentication.auth({ email, password })
       return ok(account)
     } catch (error) {
       return serverError(error)
